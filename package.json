@@ -1,0 +1,99 @@
+{
+	"name": "electron-react-typescript",
+	"version": "0.1.0",
+	"license": "MIT",
+	"homepage": "./",
+	"browserslist": [
+		">0.2%",
+		"not dead",
+		"not ie <= 11",
+		"not op_mini all"
+	],
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"build": {
+		"appId": "com.your-domain",
+		"compression": "normal",
+		"productName": "Example",
+		"directories": {
+			"buildResources": "build",
+			"output": "dist"
+		},
+		"mac": {
+			"icon": "assets/icon.icns",
+			"type": "distribution",
+			"target": [
+				"pkg",
+				"dmg",
+				"mas"
+			],
+			"publish": {
+				"provider": "s3",
+				"bucket": "example-releases",
+				"path": "releases"
+			},
+			"category": "public.app-category.news"
+		},
+		"mas": {
+			"entitlements": "assets/entitlements.mas.plist",
+			"entitlementsInherit": "assets/entitlements.mas.inherit.plist",
+			"provisioningProfile": "assets/embedded.provisionprofile"
+		},
+		"win": {
+			"target": "nsis",
+			"icon": "assets/icon.ico",
+			"publish": {
+				"provider": "s3",
+				"bucket": "example-releases",
+				"path": "releases"
+			}
+		},
+		"linux": {
+			"icon": "assets/icon.png",
+			"target": [
+				"snap",
+				"AppImage"
+			],
+			"description": "Example",
+			"category": "Network;Feed",
+			"publish": {
+				"provider": "s3",
+				"bucket": "example-releases",
+				"path": "releases"
+			}
+		}
+	},
+	"main": "public/electron.js",
+	"scripts": {
+		"dev": "yarn react-scripts start",
+		"build": "react-scripts build",
+		"start": "concurrently --kill-others \"cross-env BROWSER=none yarn react-scripts start\" \"wait-on http://localhost:3000 && electron .\"",
+		"pack": "electron-builder --dir",
+    "dist": "npx build --x64 --macos --win --linux --c.extraMetadata.main=build/electron.js -p always",
+    "test": "react-scripts test"
+	},
+	"dependencies": {
+		"electron-is-dev": "^1.1.0",
+		"react": "^16.8.6",
+		"react-dom": "^16.8.6"
+	},
+	"devDependencies": {
+		"@types/jest": "24.0.11",
+		"@types/node": "11.13.4",
+		"@types/react": "16.8.13",
+		"@types/react-dom": "16.8.4",
+		"concurrently": "^4.1.0",
+		"cross-env": "^5.2.0",
+		"electron": "^4.1.4",
+		"electron-builder": "^20.39.0",
+		"electron-devtools-installer": "2.2.4",
+		"electron-publisher-s3": "^20.17.2",
+		"node-sass": "^4.11.0",
+		"react-dev-utils": "^8.0.0",
+		"react-scripts": "2.1.8",
+		"typescript": "3.4.3",
+		"version-bump-prompt": "^5.0.1",
+		"wait-on": "3.2.0"
+	}
+}
